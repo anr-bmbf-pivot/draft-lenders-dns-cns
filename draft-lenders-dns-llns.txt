@@ -17,7 +17,9 @@ Expires: 16 April 2023                                       HAW Hamburg
 
 Abstract
 
-   TODO Abstract
+   This document provides guidance on the composition of DNS messages in
+   low power and lossy networks, where payload sizes can be heavily
+   restricted by the link layer.
 
 About This Document
 
@@ -69,18 +71,31 @@ Copyright Notice
 Table of Contents
 
    1.  Introduction
-   2.  Conventions and Definitions
-   3.  Security Considerations
-   4.  IANA Considerations
-   5.  Normative References
+   2.  Terminology
+   3.  LLN Node Considerations
+   4.  DNS Server Consideration
+   5.  Security Considerations
+   6.  IANA Considerations
+   7.  References
+     7.1.  Normative References
+     7.2.  Informative References
    Acknowledgments
    Authors' Addresses
 
 1.  Introduction
 
-   TODO Introduction
+   Low power and lossy networks (LLNs), such as IEEE 802.15.4 or
+   LoRaWAN, often come with restrictions to the protocol data unit (PDU)
+   in the link layer.  While adoption layers such as 6LoWPAN [RFC4944]
+   and SCHC [RFC8724] provide mitigation in the form of compression and
+   fragmentation to allow for IPv6 traffic, restricting the application
+   data to a minimum size greatly increases reliability.  This document
+   provides guidance on the composition of DNS messages to prevent
+   fragmentation in LLNs.
 
-2.  Conventions and Definitions
+2.  Terminology
+
+   TBD
 
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
@@ -88,15 +103,36 @@ Table of Contents
    BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
    capitals, as shown here.
 
-3.  Security Considerations
+3.  LLN Node Considerations
+
+   Nodes within an LLNs are only to assumed stub resolvers.  That means
+   they only query information from an upstream DNS server but MUST NOT
+   distribute DNS information, possibly received from an upstream DNS
+   server, themselves.
+
+4.  DNS Server Consideration
+
+   A DNS server that is aware that the querying node is a node within an
+   LLN SHOULD resolve a CNAME until the originally requested resource
+   record type is reached.  This reduces the number of message exchanges
+   within an LLN.
+
+   The DNS server SHOULD send compact answers, i.e., additional or
+   authority sections in the DNS response should only be sent if needed
+   or if it is anticipated that they help the DoC client to reduce
+   additional queries.
+
+5.  Security Considerations
 
    TODO Security
 
-4.  IANA Considerations
+6.  IANA Considerations
 
    This document has no IANA actions.
 
-5.  Normative References
+7.  References
+
+7.1.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -107,9 +143,26 @@ Table of Contents
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
 
+7.2.  Informative References
+
+   [RFC4944]  Montenegro, G., Kushalnagar, N., Hui, J., and D. Culler,
+              "Transmission of IPv6 Packets over IEEE 802.15.4
+              Networks", RFC 4944, DOI 10.17487/RFC4944, September 2007,
+              <https://www.rfc-editor.org/rfc/rfc4944>.
+
+   [RFC8724]  Minaburo, A., Toutain, L., Gomez, C., Barthel, D., and JC.
+              Zuniga, "SCHC: Generic Framework for Static Context Header
+              Compression and Fragmentation", RFC 8724,
+              DOI 10.17487/RFC8724, April 2020,
+              <https://www.rfc-editor.org/rfc/rfc8724>.
+
 Acknowledgments
 
    TODO acknowledge.
+
+   *  Carsten Bormann
+
+   *  Ben Schwartz
 
 Authors' Addresses
 
