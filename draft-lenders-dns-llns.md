@@ -43,19 +43,42 @@ informative:
 
 --- abstract
 
-TODO Abstract
-
+This document provides guidance on the composition of DNS messages in low power and lossy
+networks, where payload sizes can be heavily restricted by the link layer.
 
 --- middle
 
 # Introduction
 
-TODO Introduction
+Low power and lossy networks (LLNs), such as IEEE 802.15.4 or LoRaWAN, often come with restrictions
+to the protocol data unit (PDU) in the link layer. While adoption layers such as 6LoWPAN
+{{?RFC4944}} and SCHC {{?RFC8724}} provide mitigation in the form of compression and fragmentation
+to allow for IPv6 traffic, restricting the application data to a minimum size greatly increases
+reliability. This document provides guidance on the composition of DNS messages to prevent
+fragmentation in LLNs.
 
 
-# Conventions and Definitions
+# Terminology
+
+TBD
 
 {::boilerplate bcp14-tagged}
+
+# LLN Node Considerations
+
+Nodes within an LLNs are only to assumed stub resolvers. That means they only query information from
+an upstream DNS server but MUST NOT distribute DNS information, possibly received from an upstream
+DNS server, themselves.
+
+# DNS Server Consideration
+
+A DNS server that is aware that the querying node is a node within an LLN SHOULD resolve a CNAME
+until the originally requested resource record type is reached. This reduces the number of message
+exchanges within an LLN.
+
+The DNS server SHOULD send compact answers, i.e., additional or authority sections in the DNS
+response should only be sent if needed or if it is anticipated that they help the DoC client to
+reduce additional queries.
 
 
 # Security Considerations
@@ -74,3 +97,6 @@ This document has no IANA actions.
 {:numbered="false"}
 
 TODO acknowledge.
+
+- Carsten Bormann
+- Ben Schwartz
