@@ -1,6 +1,7 @@
-# TODO - Your title
+# Guidance on DNS message composition over Low-Power and Lossy Networks (LLNs)
 
-This is the working area for the individual Internet-Draft, "TODO - Your title".
+This is the working area for the individual Internet-Draft, "Guidance on DNS message composition
+over Low-Power and Lossy Networks (LLNs)".
 
 * [Editor's Copy](https://anr-bmbf-pivot.github.io/draft-lenders-dns-llns/#go.draft-lenders-dns-llns.html)
 * [Datatracker Page](https://datatracker.ietf.org/doc/draft-lenders-dns-llns)
