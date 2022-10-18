@@ -5,15 +5,14 @@
 TBD                                                        M. S. Lenders
 Internet-Draft                                                 FU Berlin
 Intended status: Best Current Practice                     T. C. Schmidt
-Expires: 16 April 2023                                       HAW Hamburg
+Expires: 21 April 2023                                       HAW Hamburg
                                                              M. Wählisch
                                                                FU Berlin
-                                                         13 October 2022
+                                                         18 October 2022
 
 
- Guidance on DNS message composition over Low-Power and Lossy Networks
-                                 (LLNs)
-                     draft-lenders-dns-llns-latest
+       Guidance on DNS message composition in constraint networks
+                      draft-lenders-dns-cns-latest
 
 Abstract
 
@@ -26,16 +25,16 @@ About This Document
    This note is to be removed before publishing as an RFC.
 
    The latest revision of this draft can be found at https://anr-bmbf-
-   pivot.github.io/draft-lenders-dns-llns/draft-lenders-dns-llns.html.
+   pivot.github.io/draft-lenders-dns-cns/draft-lenders-dns-cns.html.
    Status information for this document may be found at
-   https://datatracker.ietf.org/doc/draft-lenders-dns-llns/.
+   https://datatracker.ietf.org/doc/draft-lenders-dns-cns/.
 
    Discussion of this document takes place on the TBD Working Group
    mailing list (mailto:TBD@example.com), which is archived at
    nicfs.nic.ddn.mil:~/namedroppers/*.Z.
 
    Source for this draft and an issue tracker can be found at
-   https://github.com/anr-bmbf-pivot/draft-lenders-dns-llns.
+   https://github.com/anr-bmbf-pivot/draft-lenders-dns-cns.
 
 Status of This Memo
 
@@ -52,7 +51,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 16 April 2023.
+   This Internet-Draft will expire on 21 April 2023.
 
 Copyright Notice
 
@@ -72,7 +71,7 @@ Table of Contents
 
    1.  Introduction
    2.  Terminology
-   3.  LLN Node Considerations
+   3.  Constrained Node Considerations
    4.  DNS Server Consideration
    5.  Security Considerations
    6.  IANA Considerations
@@ -84,14 +83,14 @@ Table of Contents
 
 1.  Introduction
 
-   Low power and lossy networks (LLNs), such as IEEE 802.15.4 or
-   LoRaWAN, often come with restrictions to the protocol data unit (PDU)
-   in the link layer.  While adoption layers such as 6LoWPAN [RFC4944]
-   and SCHC [RFC8724] provide mitigation in the form of compression and
+   Constrained networks [RFC7228], such as IEEE 802.15.4 or LoRaWAN,
+   often come with restrictions to the protocol data unit (PDU) in the
+   link layer.  While adoption layers such as 6LoWPAN [RFC4944] and SCHC
+   [RFC8724] provide mitigation in the form of compression and
    fragmentation to allow for IPv6 traffic, restricting the application
    data to a minimum size greatly increases reliability.  This document
    provides guidance on the composition of DNS messages to prevent
-   fragmentation in LLNs.
+   fragmentation in constrained networks.
 
 2.  Terminology
 
@@ -103,19 +102,19 @@ Table of Contents
    BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
    capitals, as shown here.
 
-3.  LLN Node Considerations
+3.  Constrained Node Considerations
 
-   Nodes within an LLNs are only to assumed stub resolvers.  That means
-   they only query information from an upstream DNS server but MUST NOT
-   distribute DNS information, possibly received from an upstream DNS
-   server, themselves.
+   Nodes within an constrained networks are only to assumed stub
+   resolvers.  That means they only query information from an upstream
+   DNS server but MUST NOT distribute DNS information, possibly received
+   from an upstream DNS server, themselves.
 
 4.  DNS Server Consideration
 
-   A DNS server that is aware that the querying node is a node within an
-   LLN SHOULD resolve a CNAME until the originally requested resource
-   record type is reached.  This reduces the number of message exchanges
-   within an LLN.
+   A DNS server that is aware that the querying node is a node within a
+   constrained network SHOULD resolve a CNAME until the originally
+   requested resource record type is reached.  This reduces the number
+   of message exchanges within a constrained network.
 
    The DNS server SHOULD send compact answers, i.e., additional or
    authority sections in the DNS response should only be sent if needed
@@ -149,6 +148,11 @@ Table of Contents
               "Transmission of IPv6 Packets over IEEE 802.15.4
               Networks", RFC 4944, DOI 10.17487/RFC4944, September 2007,
               <https://www.rfc-editor.org/rfc/rfc4944>.
+
+   [RFC7228]  Bormann, C., Ersue, M., and A. Keranen, "Terminology for
+              Constrained-Node Networks", RFC 7228,
+              DOI 10.17487/RFC7228, May 2014,
+              <https://www.rfc-editor.org/rfc/rfc7228>.
 
    [RFC8724]  Minaburo, A., Toutain, L., Gomez, C., Barthel, D., and JC.
               Zuniga, "SCHC: Generic Framework for Static Context Header
