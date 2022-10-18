@@ -1,18 +1,18 @@
-# Guidance on DNS message composition over Low-Power and Lossy Networks (LLNs)
+# Guidance on DNS message composition in constrained networks
 
 This is the working area for the individual Internet-Draft, "Guidance on DNS message composition
-over Low-Power and Lossy Networks (LLNs)".
+in constrained networks".
 
-* [Editor's Copy](https://anr-bmbf-pivot.github.io/draft-lenders-dns-llns/#go.draft-lenders-dns-llns.html)
-* [Datatracker Page](https://datatracker.ietf.org/doc/draft-lenders-dns-llns)
-* [Individual Draft](https://datatracker.ietf.org/doc/html/draft-lenders-dns-llns)
-* [Compare Editor's Copy to Individual Draft](https://anr-bmbf-pivot.github.io/draft-lenders-dns-llns/#go.draft-lenders-dns-llns.diff)
+* [Editor's Copy](https://anr-bmbf-pivot.github.io/draft-lenders-dns-cns/#go.draft-lenders-dns-cns.html)
+* [Datatracker Page](https://datatracker.ietf.org/doc/draft-lenders-dns-cns)
+* [Individual Draft](https://datatracker.ietf.org/doc/html/draft-lenders-dns-cns)
+* [Compare Editor's Copy to Individual Draft](https://anr-bmbf-pivot.github.io/draft-lenders-dns-cns/#go.draft-lenders-dns-cns.diff)
 
 
 ## Contributing
 
 See the
-[guidelines for contributions](https://github.com/anr-bmbf-pivot/draft-lenders-dns-llns/blob//CONTRIBUTING.md).
+[guidelines for contributions](https://github.com/anr-bmbf-pivot/draft-lenders-dns-cns/blob/main/CONTRIBUTING.md).
 
 Contributions can be made by creating pull requests.
 The GitHub interface supports creating pull requests using the Edit (✏) button.

@@ -1,9 +1,9 @@
 ---
-title: "Guidance on DNS message composition over Low-Power and Lossy Networks (LLNs)"
+title: "Guidance on DNS message composition in constraint networks"
 abbrev: "TODO - Abbreviation"
 category: bcp
 
-docname: draft-lenders-dns-llns-latest
+docname: draft-lenders-dns-cns-latest
 number:
 date:
 consensus: true
@@ -20,8 +20,8 @@ venue:
   type: Working Group
   mail: TBD@example.com
   arch: "nicfs.nic.ddn.mil:~/namedroppers/*.Z"
-  github: "anr-bmbf-pivot/draft-lenders-dns-llns"
-  latest: "https://anr-bmbf-pivot.github.io/draft-lenders-dns-llns/draft-lenders-dns-llns.html"
+  github: "anr-bmbf-pivot/draft-lenders-dns-cns"
+  latest: "https://anr-bmbf-pivot.github.io/draft-lenders-dns-cns/draft-lenders-dns-cns.html"
 
 author:
  -  fullname: Martine Sophie Lenders
@@ -39,7 +39,7 @@ author:
 normative:
 
 informative:
-
+  RFC7228: cns
 
 --- abstract
 
@@ -50,12 +50,12 @@ networks, where payload sizes can be heavily restricted by the link layer.
 
 # Introduction
 
-Low power and lossy networks (LLNs), such as IEEE 802.15.4 or LoRaWAN, often come with restrictions
+Constrained networks {{-cns}}, such as IEEE 802.15.4 or LoRaWAN, often come with restrictions
 to the protocol data unit (PDU) in the link layer. While adoption layers such as 6LoWPAN
 {{?RFC4944}} and SCHC {{?RFC8724}} provide mitigation in the form of compression and fragmentation
 to allow for IPv6 traffic, restricting the application data to a minimum size greatly increases
 reliability. This document provides guidance on the composition of DNS messages to prevent
-fragmentation in LLNs.
+fragmentation in constrained networks.
 
 
 # Terminology
@@ -64,17 +64,18 @@ TBD
 
 {::boilerplate bcp14-tagged}
 
-# LLN Node Considerations
+# Constrained Node Considerations
 
-Nodes within an LLNs are only to assumed stub resolvers. That means they only query information from
-an upstream DNS server but MUST NOT distribute DNS information, possibly received from an upstream
-DNS server, themselves.
+Nodes within an constrained networks are only to assumed stub resolvers.
+That means they only query information from an upstream DNS server but MUST NOT distribute DNS
+information, possibly received from an upstream DNS server, themselves.
 
 # DNS Server Consideration
 
-A DNS server that is aware that the querying node is a node within an LLN SHOULD resolve a CNAME
+A DNS server that is aware that the querying node is a node within a constrained network SHOULD
+resolve a CNAME
 until the originally requested resource record type is reached. This reduces the number of message
-exchanges within an LLN.
+exchanges within a constrained network.
 
 The DNS server SHOULD send compact answers, i.e., additional or authority sections in the DNS
 response should only be sent if needed or if it is anticipated that they help the DoC client to
