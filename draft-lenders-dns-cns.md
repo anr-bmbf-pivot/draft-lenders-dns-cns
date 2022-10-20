@@ -40,6 +40,8 @@ normative:
 
 informative:
   RFC7228: cns
+  RFC4944: 6lowpan
+  RFC8724: schc
 
 --- abstract
 
@@ -52,7 +54,7 @@ networks, where payload sizes can be heavily restricted by the link layer.
 
 Constrained networks {{-cns}}, such as IEEE 802.15.4 or LoRaWAN, often come with restrictions
 to the protocol data unit (PDU) in the link layer. While adoption layers such as 6LoWPAN
-{{?RFC4944}} and SCHC {{?RFC8724}} provide mitigation in the form of compression and fragmentation
+{{-6lowpan}} and SCHC {{-schc}} provide mitigation in the form of compression and fragmentation
 to allow for IPv6 traffic, restricting the application data to a minimum size greatly increases
 reliability. This document provides guidance on the composition of DNS messages to prevent
 fragmentation in constrained networks.
