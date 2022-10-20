@@ -17,8 +17,8 @@ Expires: 23 April 2023                                       HAW Hamburg
 Abstract
 
    This document provides guidance on the composition of DNS messages in
-   low power and lossy networks, where payload sizes can be heavily
-   restricted by the link layer.
+   constrained networks, where payload sizes can be heavily restricted
+   by the link layer and power consumption must be taken into account.
 
 About This Document
 
@@ -85,16 +85,30 @@ Table of Contents
 
    Constrained networks [RFC7228], such as IEEE 802.15.4 or LoRaWAN,
    often come with restrictions to the protocol data unit (PDU) in the
-   link layer.  While adoption layers such as 6LoWPAN [RFC4944] and SCHC
+   link layer.  Adoption layers such as 6LoWPAN [RFC4944] and SCHC
    [RFC8724] provide mitigation in the form of compression and
-   fragmentation to allow for IPv6 traffic, restricting the application
-   data to a minimum size greatly increases reliability.  This document
-   provides guidance on the composition of DNS messages to prevent
-   fragmentation in constrained networks.
+   fragmentation to allow for IPv6 traffic.  However, restricting the
+   application data to a minimum size greatly increases reliability by
+   decreasing potentially lossy fragmentation.
+
+   Constrained nodes [RFC7228] are furthermore often battery powered and
+   follow a strict duty cycle.  To reduce unnecessary device wake-ups,
+   the number of DNS messages should be reduced to a minimum.
+
+   This document provides guidance on the composition of DNS messages to
+   prevent fragmentation and reduce power consumption in constrained
+   networks.
 
 2.  Terminology
 
-   TBD
+   A "DNS server" is a server that provides DNS information to a
+   querying client.  For the purpose of this document this term may
+   refer to queries over any transport for DNS, not just classic DNS
+   [RFC1035], but also transports such as DNS over TLS [RFC7858], DNS
+   over HTTPS [RFC8484], or DNS over CoAP [I-D.ietf-core-dns-over-coap].
+
+   The terms "constrained node" and "constrained network" are used as
+   defined in [RFC7228].
 
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
@@ -106,24 +120,30 @@ Table of Contents
 
    Nodes within an constrained networks are only to assumed stub
    resolvers.  That means they only query information from an upstream
-   DNS server but MUST NOT distribute DNS information, possibly received
-   from an upstream DNS server, themselves.
+   DNS server but MUST NOT distribute any DNS information, received from
+   an upstream DNS server, themselves.
 
 4.  DNS Server Consideration
 
    A DNS server that is aware that the querying node is a node within a
-   constrained network SHOULD resolve a CNAME until the originally
-   requested resource record type is reached.  This reduces the number
-   of message exchanges within a constrained network.
+   constrained network SHOULD resolve a CNAME or PTR record until the
+   originally requested resource record type is reached.  This reduces
+   the number of message exchanges within a constrained network.
 
    The DNS server SHOULD send compact answers, i.e., additional or
-   authority sections in the DNS response should only be sent if needed
-   or if it is anticipated that they help the DoC client to reduce
+   authority sections in the DNS response MAY only be sent if needed or
+   if it is anticipated that they help the DoC client to reduce
    additional queries.
 
 5.  Security Considerations
 
-   TODO Security
+   In the case when DNS clients act themselves as DNS servers, resolving
+   CNAME and PTR records at the upstream DNS server may lead to the DNS
+   client forwarding incorrect DNS information to its clients.  As such,
+   this document prohibits the distribution of such information in
+   Section 3
+
+   TODO more security
 
 6.  IANA Considerations
 
@@ -132,6 +152,10 @@ Table of Contents
 7.  References
 
 7.1.  Normative References
+
+   [RFC1035]  Mockapetris, P., "Domain names - implementation and
+              specification", STD 13, RFC 1035, DOI 10.17487/RFC1035,
+              November 1987, <https://www.rfc-editor.org/rfc/rfc1035>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -144,6 +168,13 @@ Table of Contents
 
 7.2.  Informative References
 
+   [I-D.ietf-core-dns-over-coap]
+              Lenders, M. S., Amsüss, C., Gündoğan, C., Schmidt, T. C.,
+              and M. Wählisch, "DNS over CoAP (DoC)", Work in Progress,
+              Internet-Draft, draft-ietf-core-dns-over-coap-00, 5
+              September 2022, <https://datatracker.ietf.org/doc/html/
+              draft-ietf-core-dns-over-coap-00>.
+
    [RFC4944]  Montenegro, G., Kushalnagar, N., Hui, J., and D. Culler,
               "Transmission of IPv6 Packets over IEEE 802.15.4
               Networks", RFC 4944, DOI 10.17487/RFC4944, September 2007,
@@ -153,6 +184,15 @@ Table of Contents
               Constrained-Node Networks", RFC 7228,
               DOI 10.17487/RFC7228, May 2014,
               <https://www.rfc-editor.org/rfc/rfc7228>.
+
+   [RFC7858]  Hu, Z., Zhu, L., Heidemann, J., Mankin, A., Wessels, D.,
+              and P. Hoffman, "Specification for DNS over Transport
+              Layer Security (TLS)", RFC 7858, DOI 10.17487/RFC7858, May
+              2016, <https://www.rfc-editor.org/rfc/rfc7858>.
+
+   [RFC8484]  Hoffman, P. and P. McManus, "DNS Queries over HTTPS
+              (DoH)", RFC 8484, DOI 10.17487/RFC8484, October 2018,
+              <https://www.rfc-editor.org/rfc/rfc8484>.
 
    [RFC8724]  Minaburo, A., Toutain, L., Gomez, C., Barthel, D., and JC.
               Zuniga, "SCHC: Generic Framework for Static Context Header

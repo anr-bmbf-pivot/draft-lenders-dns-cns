@@ -9,8 +9,9 @@
 <meta content="Thomas C. Schmidt" name="author">
 <meta content="Matthias Wählisch" name="author">
 <meta content="
-       This document provides guidance on the composition of DNS messages in low power and lossy
-networks, where payload sizes can be heavily restricted by the link layer. 
+       This document provides guidance on the composition of DNS messages in constrained
+networks, where payload sizes can be heavily restricted by the link layer and power consumption must
+be taken into account. 
     " name="description">
 <meta content="xml2rfc 3.15.1" name="generator">
 <meta content="Internet-Draft" name="keyword">
@@ -1083,8 +1084,9 @@ svg :is([stroke="fill"], [fill^="#fff"]) {
 <h1 id="title">Guidance on DNS message composition in constraint networks</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">This document provides guidance on the composition of DNS messages in low power and lossy
-networks, where payload sizes can be heavily restricted by the link layer.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-1">This document provides guidance on the composition of DNS messages in constrained
+networks, where payload sizes can be heavily restricted by the link layer and power consumption must
+be taken into account.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-about-this-document">
@@ -1194,11 +1196,15 @@ networks, where payload sizes can be heavily restricted by the link layer.<a hre
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
 <p id="section-1-1">Constrained networks <span>[<a href="#RFC7228" class="cite xref">RFC7228</a>]</span>, such as IEEE 802.15.4 or LoRaWAN, often come with restrictions
-to the protocol data unit (PDU) in the link layer. While adoption layers such as 6LoWPAN
-<span>[<a href="#RFC4944" class="cite xref">RFC4944</a>]</span> and SCHC <span>[<a href="#RFC8724" class="cite xref">RFC8724</a>]</span> provide mitigation in the form of compression and fragmentation
-to allow for IPv6 traffic, restricting the application data to a minimum size greatly increases
-reliability. This document provides guidance on the composition of DNS messages to prevent
-fragmentation in constrained networks.<a href="#section-1-1" class="pilcrow">¶</a></p>
+to the protocol data unit (PDU) in the link layer.
+Adoption layers such as 6LoWPAN <span>[<a href="#RFC4944" class="cite xref">RFC4944</a>]</span> and SCHC <span>[<a href="#RFC8724" class="cite xref">RFC8724</a>]</span> provide mitigation in the form of
+compression and fragmentation to allow for IPv6 traffic.
+However, restricting the application data to a minimum size greatly increases reliability by
+decreasing potentially lossy fragmentation.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-2">Constrained nodes <span>[<a href="#RFC7228" class="cite xref">RFC7228</a>]</span> are furthermore often battery powered and follow a strict duty cycle.
+To reduce unnecessary device wake-ups, the number of DNS messages should be reduced to a minimum.<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-3">This document provides guidance on the composition of DNS messages to prevent fragmentation and
+reduce power consumption in constrained networks.<a href="#section-1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="terminology">
@@ -1206,21 +1212,25 @@ fragmentation in constrained networks.<a href="#section-1-1" class="pilcrow">¶<
       <h2 id="name-terminology">
 <a href="#section-2" class="section-number selfRef">2. </a><a href="#name-terminology" class="section-name selfRef">Terminology</a>
       </h2>
-<p id="section-2-1">TBD<a href="#section-2-1" class="pilcrow">¶</a></p>
-<p id="section-2-2">The key words "<span class="bcp14">MUST</span>", "<span class="bcp14">MUST NOT</span>", "<span class="bcp14">REQUIRED</span>", "<span class="bcp14">SHALL</span>", "<span class="bcp14">SHALL NOT</span>", "<span class="bcp14">SHOULD</span>", "<span class="bcp14">SHOULD NOT</span>", "<span class="bcp14">RECOMMENDED</span>", "<span class="bcp14">NOT RECOMMENDED</span>",
+<p id="section-2-1">A "DNS server" is a server that provides DNS information to a querying client.
+For the purpose of this document this term may refer to queries over any transport for DNS, not just
+classic DNS <span>[<a href="#RFC1035" class="cite xref">RFC1035</a>]</span>, but also transports such as DNS over TLS <span>[<a href="#RFC7858" class="cite xref">RFC7858</a>]</span>, DNS over HTTPS <span>[<a href="#RFC8484" class="cite xref">RFC8484</a>]</span>, or
+DNS over CoAP <span>[<a href="#I-D.ietf-core-dns-over-coap" class="cite xref">I-D.ietf-core-dns-over-coap</a>]</span>.<a href="#section-2-1" class="pilcrow">¶</a></p>
+<p id="section-2-2">The terms "constrained node" and "constrained network" are used as defined in <span>[<a href="#RFC7228" class="cite xref">RFC7228</a>]</span>.<a href="#section-2-2" class="pilcrow">¶</a></p>
+<p id="section-2-3">The key words "<span class="bcp14">MUST</span>", "<span class="bcp14">MUST NOT</span>", "<span class="bcp14">REQUIRED</span>", "<span class="bcp14">SHALL</span>", "<span class="bcp14">SHALL NOT</span>", "<span class="bcp14">SHOULD</span>", "<span class="bcp14">SHOULD NOT</span>", "<span class="bcp14">RECOMMENDED</span>", "<span class="bcp14">NOT RECOMMENDED</span>",
 "<span class="bcp14">MAY</span>", and "<span class="bcp14">OPTIONAL</span>" in this document are to be interpreted as
 described in BCP 14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span> <span>[<a href="#RFC8174" class="cite xref">RFC8174</a>]</span> when, and only when, they
-appear in all capitals, as shown here.<a href="#section-2-2" class="pilcrow">¶</a></p>
+appear in all capitals, as shown here.<a href="#section-2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="constrained-node-considerations">
+<div id="sec_node-considerations">
 <section id="section-3">
       <h2 id="name-constrained-node-considerat">
 <a href="#section-3" class="section-number selfRef">3. </a><a href="#name-constrained-node-considerat" class="section-name selfRef">Constrained Node Considerations</a>
       </h2>
 <p id="section-3-1">Nodes within an constrained networks are only to assumed stub resolvers.
-That means they only query information from an upstream DNS server but <span class="bcp14">MUST NOT</span> distribute DNS
-information, possibly received from an upstream DNS server, themselves.<a href="#section-3-1" class="pilcrow">¶</a></p>
+That means they only query information from an upstream DNS server but <span class="bcp14">MUST NOT</span> distribute any DNS
+information, received from an upstream DNS server, themselves.<a href="#section-3-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="dns-server-consideration">
@@ -1229,11 +1239,10 @@ information, possibly received from an upstream DNS server, themselves.<a href="
 <a href="#section-4" class="section-number selfRef">4. </a><a href="#name-dns-server-consideration" class="section-name selfRef">DNS Server Consideration</a>
       </h2>
 <p id="section-4-1">A DNS server that is aware that the querying node is a node within a constrained network <span class="bcp14">SHOULD</span>
-resolve a CNAME
-until the originally requested resource record type is reached. This reduces the number of message
-exchanges within a constrained network.<a href="#section-4-1" class="pilcrow">¶</a></p>
+resolve a CNAME or PTR record until the originally requested resource record type is reached.
+This reduces the number of message exchanges within a constrained network.<a href="#section-4-1" class="pilcrow">¶</a></p>
 <p id="section-4-2">The DNS server <span class="bcp14">SHOULD</span> send compact answers, i.e., additional or authority sections in the DNS
-response should only be sent if needed or if it is anticipated that they help the DoC client to
+response <span class="bcp14">MAY</span> only be sent if needed or if it is anticipated that they help the DoC client to
 reduce additional queries.<a href="#section-4-2" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1242,7 +1251,10 @@ reduce additional queries.<a href="#section-4-2" class="pilcrow">¶</a></p>
       <h2 id="name-security-considerations">
 <a href="#section-5" class="section-number selfRef">5. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
-<p id="section-5-1">TODO Security<a href="#section-5-1" class="pilcrow">¶</a></p>
+<p id="section-5-1">In the case when DNS clients act themselves as DNS servers, resolving CNAME and PTR records at the
+upstream DNS server may lead to the DNS client forwarding incorrect DNS information to its clients.
+As such, this document prohibits the distribution of such information in <a href="#sec_node-considerations" class="auto internal xref">Section 3</a><a href="#section-5-1" class="pilcrow">¶</a></p>
+<p id="section-5-2">TODO more security<a href="#section-5-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="iana-considerations">
@@ -1262,6 +1274,10 @@ reduce additional queries.<a href="#section-4-2" class="pilcrow">¶</a></p>
 <a href="#section-7.1" class="section-number selfRef">7.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
         </h3>
 <dl class="references">
+<dt id="RFC1035">[RFC1035]</dt>
+        <dd>
+<span class="refAuthor">Mockapetris, P.</span>, <span class="refTitle">"Domain names - implementation and specification"</span>, <span class="seriesInfo">STD 13</span>, <span class="seriesInfo">RFC 1035</span>, <span class="seriesInfo">DOI 10.17487/RFC1035</span>, <time datetime="1987-11" class="refDate">November 1987</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc1035">https://www.rfc-editor.org/rfc/rfc1035</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC2119">[RFC2119]</dt>
         <dd>
 <span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
@@ -1277,6 +1293,10 @@ reduce additional queries.<a href="#section-4-2" class="pilcrow">¶</a></p>
 <a href="#section-7.2" class="section-number selfRef">7.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
         </h3>
 <dl class="references">
+<dt id="I-D.ietf-core-dns-over-coap">[I-D.ietf-core-dns-over-coap]</dt>
+        <dd>
+<span class="refAuthor">Lenders, M. S.</span>, <span class="refAuthor">Amsüss, C.</span>, <span class="refAuthor">Gündoğan, C.</span>, <span class="refAuthor">Schmidt, T. C.</span>, and <span class="refAuthor">M. Wählisch</span>, <span class="refTitle">"DNS over CoAP (DoC)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-core-dns-over-coap-00</span>, <time datetime="2022-09-05" class="refDate">5 September 2022</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-core-dns-over-coap-00">https://datatracker.ietf.org/doc/html/draft-ietf-core-dns-over-coap-00</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC4944">[RFC4944]</dt>
         <dd>
 <span class="refAuthor">Montenegro, G.</span>, <span class="refAuthor">Kushalnagar, N.</span>, <span class="refAuthor">Hui, J.</span>, and <span class="refAuthor">D. Culler</span>, <span class="refTitle">"Transmission of IPv6 Packets over IEEE 802.15.4 Networks"</span>, <span class="seriesInfo">RFC 4944</span>, <span class="seriesInfo">DOI 10.17487/RFC4944</span>, <time datetime="2007-09" class="refDate">September 2007</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc4944">https://www.rfc-editor.org/rfc/rfc4944</a>&gt;</span>. </dd>
@@ -1284,6 +1304,14 @@ reduce additional queries.<a href="#section-4-2" class="pilcrow">¶</a></p>
 <dt id="RFC7228">[RFC7228]</dt>
         <dd>
 <span class="refAuthor">Bormann, C.</span>, <span class="refAuthor">Ersue, M.</span>, and <span class="refAuthor">A. Keranen</span>, <span class="refTitle">"Terminology for Constrained-Node Networks"</span>, <span class="seriesInfo">RFC 7228</span>, <span class="seriesInfo">DOI 10.17487/RFC7228</span>, <time datetime="2014-05" class="refDate">May 2014</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7228">https://www.rfc-editor.org/rfc/rfc7228</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC7858">[RFC7858]</dt>
+        <dd>
+<span class="refAuthor">Hu, Z.</span>, <span class="refAuthor">Zhu, L.</span>, <span class="refAuthor">Heidemann, J.</span>, <span class="refAuthor">Mankin, A.</span>, <span class="refAuthor">Wessels, D.</span>, and <span class="refAuthor">P. Hoffman</span>, <span class="refTitle">"Specification for DNS over Transport Layer Security (TLS)"</span>, <span class="seriesInfo">RFC 7858</span>, <span class="seriesInfo">DOI 10.17487/RFC7858</span>, <time datetime="2016-05" class="refDate">May 2016</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7858">https://www.rfc-editor.org/rfc/rfc7858</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8484">[RFC8484]</dt>
+        <dd>
+<span class="refAuthor">Hoffman, P.</span> and <span class="refAuthor">P. McManus</span>, <span class="refTitle">"DNS Queries over HTTPS (DoH)"</span>, <span class="seriesInfo">RFC 8484</span>, <span class="seriesInfo">DOI 10.17487/RFC8484</span>, <time datetime="2018-10" class="refDate">October 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8484">https://www.rfc-editor.org/rfc/rfc8484</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8724">[RFC8724]</dt>
       <dd>
