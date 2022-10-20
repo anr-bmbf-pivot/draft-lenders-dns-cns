@@ -97,7 +97,7 @@ This document has no IANA actions.
 --- back
 
 # Acknowledgments
-{:numbered="false"}
+{:unnumbered}
 
 TODO acknowledge.
 
