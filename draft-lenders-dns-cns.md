@@ -109,9 +109,10 @@ reduce additional queries.
 
 # Security Considerations
 
-In the case when DNS clients act themselves as DNS servers, resolving CNAME and PTR records at the
-upstream DNS server may lead to the DNS client forwarding incorrect DNS information to its clients.
-As such, this document prohibits the distribution of such information in {{sec:node-considerations}}
+In the case when DNS clients act as DNS servers, resolving CNAME and PTR
+records at the upstream DNS server may lead to incorrect DNS information
+forwarded by the client.  As such, this document prohibits the distribution
+of such information in {{sec:node-considerations}}
 
 TODO more security
 
