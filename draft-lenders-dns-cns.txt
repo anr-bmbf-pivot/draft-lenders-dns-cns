@@ -5,13 +5,13 @@
 TBD                                                        M. S. Lenders
 Internet-Draft                                                 FU Berlin
 Intended status: Best Current Practice                     T. C. Schmidt
-Expires: 23 April 2023                                       HAW Hamburg
+Expires: 26 April 2023                                       HAW Hamburg
                                                              M. Wählisch
                                                                FU Berlin
-                                                         20 October 2022
+                                                         23 October 2022
 
 
-       Guidance on DNS message composition in constraint networks
+       Guidance on DNS Message Composition in Constraint Networks
                       draft-lenders-dns-cns-latest
 
 Abstract
@@ -51,7 +51,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 23 April 2023.
+   This Internet-Draft will expire on 26 April 2023.
 
 Copyright Notice
 
