@@ -71,7 +71,7 @@ Table of Contents
 
    1.  Introduction
    2.  Terminology
-   3.  Constrained Node Considerations
+   3.  Constrained Resolver Considerations
    4.  DNS Server Consideration
    5.  Security Considerations
    6.  IANA Considerations
@@ -118,19 +118,20 @@ Table of Contents
    BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
    capitals, as shown here.
 
-3.  Constrained Node Considerations
+3.  Constrained Resolver Considerations
 
-   Nodes within an constrained networks are only to assumed stub
-   resolvers.  That means they only query information from an upstream
-   DNS server but MUST NOT distribute any DNS information, received from
-   an upstream DNS server, themselves.
+   Nodes within a constrained network that implement DNS are assumed to
+   be stub resolvers [RFC8499].  This means they only query information
+   from a recursive DNS resolver and they MUST NOT distribute any DNS
+   information received from an upstream DNS server.
 
 4.  DNS Server Consideration
 
    A DNS server that is aware that the querying node is a node within a
    constrained network SHOULD resolve a CNAME or PTR record until the
-   originally requested resource record type is reached.  This reduces
-   the number of message exchanges within a constrained network.
+   resource record type originally requested by the node is reached.
+   This reduces the number of message exchanges within a constrained
+   network.
 
    The DNS server SHOULD send compact answers, i.e., additional or
    authority sections in the DNS response MAY only be sent if needed or
@@ -195,6 +196,10 @@ Table of Contents
    [RFC8484]  Hoffman, P. and P. McManus, "DNS Queries over HTTPS
               (DoH)", RFC 8484, DOI 10.17487/RFC8484, October 2018,
               <https://www.rfc-editor.org/rfc/rfc8484>.
+
+   [RFC8499]  Hoffman, P., Sullivan, A., and K. Fujiwara, "DNS
+              Terminology", BCP 219, RFC 8499, DOI 10.17487/RFC8499,
+              January 2019, <https://www.rfc-editor.org/rfc/rfc8499>.
 
    [RFC8724]  Minaburo, A., Toutain, L., Gomez, C., Barthel, D., and JC.
               Zuniga, "SCHC: Generic Framework for Static Context Header
