@@ -83,21 +83,23 @@ Table of Contents
 
 1.  Introduction
 
-   Constrained networks [RFC7228], such as IEEE 802.15.4 or LoRaWAN,
-   often come with restrictions to the protocol data unit (PDU) in the
-   link layer.  Adoption layers such as 6LoWPAN [RFC4944] and SCHC
-   [RFC8724] provide mitigation in the form of compression and
-   fragmentation to allow for IPv6 traffic.  However, restricting the
-   application data to a minimum size greatly increases reliability by
-   decreasing potentially lossy fragmentation.
+   Many IoT scenarios rely on constrained nodes [RFC7228] and need the
+   Domain Name System (DNS).  Constrained nodes [RFC7228], however,
+   challenge DNS resolution for two reasons.  First, IoT networks, such
+   as IEEE 802.15.4 and LoRaWAN, often limit the payload of the data
+   link layer significantly in terms of size, which prevents common
+   (larger) DNS responses.  Second, constrained nodes are often battery
+   powered and follow a strict duty cycle, which would benefit from
+   minimal number of DNS messages to reduce unnecessary device wake-ups.
+   Adoption layers such as 6LoWPAN [RFC4944] and SCHC [RFC8724] provide
+   fragmentation and compression to overcome the problem, but do not
+   help in principle.  Fragmentation requires more buffer space to
+   account for lost fragments in lossy networks, and compression
+   introduces additional processing overhead.
 
-   Constrained nodes [RFC7228] are furthermore often battery powered and
-   follow a strict duty cycle.  To reduce unnecessary device wake-ups,
-   the number of DNS messages should be reduced to a minimum.
-
-   This document provides guidance on the composition of DNS messages to
-   prevent fragmentation and reduce power consumption in constrained
-   networks.
+   This document provides best common practices on DNS behavior, to
+   reduce fragmentation and power consumption in constrained networks
+   when IoT nodes resolve names.
 
 2.  Terminology
 
