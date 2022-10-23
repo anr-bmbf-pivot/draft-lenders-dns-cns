@@ -104,10 +104,10 @@ Table of Contents
 2.  Terminology
 
    A "DNS server" is a server that provides DNS information to a
-   querying client.  For the purpose of this document this term may
-   refer to queries over any transport for DNS, not just classic DNS
-   [RFC1035], but also transports such as DNS over TLS [RFC7858], DNS
-   over HTTPS [RFC8484], or DNS over CoAP [I-D.ietf-core-dns-over-coap].
+   querying DNS client.  For the purpose of this document, server and
+   client may communicate based on any DNS transport, not just DNS over
+   UDP [RFC1035], but also DNS over TLS [RFC7858], DNS over HTTPS
+   [RFC8484], or DNS over CoAP [I-D.ietf-core-dns-over-coap].
 
    The terms "constrained node" and "constrained network" are used as
    defined in [RFC7228].
