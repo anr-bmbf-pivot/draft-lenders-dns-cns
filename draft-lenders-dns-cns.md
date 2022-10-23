@@ -1,5 +1,5 @@
 ---
-title: "Guidance on DNS Message Composition in Constraint Networks"
+title: "Guidance on DNS Message Composition in Constrained Networks"
 abbrev: "TODO - Abbreviation"
 category: bcp
 
