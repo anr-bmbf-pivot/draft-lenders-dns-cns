@@ -77,10 +77,11 @@ resolve names.
 
 # Terminology
 
-A "DNS server" is a server that provides DNS information to a querying client.
-For the purpose of this document this term may refer to queries over any transport for DNS, not just
-classic DNS {{-dns}}, but also transports such as DNS over TLS {{-dot}}, DNS over HTTPS {{-doh}}, or
-DNS over CoAP {{-doc}}.
+A "DNS server" is a server that provides DNS information to a querying DNS
+client.  For the purpose of this document, server and client may
+communicate based on any DNS transport, not just DNS over UDP {{-dns}}, but
+also DNS over TLS {{-dot}}, DNS over HTTPS {{-doh}}, or DNS over CoAP
+{{-doc}}.
 
 The terms "constrained node" and "constrained network" are used as defined in {{-cns}}.
 
