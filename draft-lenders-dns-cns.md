@@ -49,9 +49,9 @@ informative:
 
 --- abstract
 
-This document provides guidance on the composition of DNS messages in constrained
-networks, where payload sizes can be heavily restricted by the link layer and power consumption must
-be taken into account.
+This document provides guidance on the composition of DNS messages in
+constrained networks, where the link layer may restrict payload sizes
+significantly and batteries challenge power consumption.
 
 --- middle
 
