@@ -45,6 +45,7 @@ informative:
   RFC7858: dot
   RFC8484: doh
   RFC8724: schc
+  RFC8499: dnsterm
   I-D.ietf-core-dns-over-coap: doc
 
 --- abstract
@@ -87,16 +88,18 @@ The terms "constrained node" and "constrained network" are used as defined in {{
 
 {::boilerplate bcp14-tagged}
 
-# Constrained Node Considerations {#sec:node-considerations}
+# Constrained Resolver Considerations {#sec:node-considerations}
 
-Nodes within an constrained networks are only to assumed stub resolvers.
-That means they only query information from an upstream DNS server but MUST NOT distribute any DNS
-information, received from an upstream DNS server, themselves.
+Nodes within a constrained network that implement DNS are assumed to be
+stub resolvers {{-dnsterm}}.  This means they only query information from a
+recursive DNS resolver and they MUST NOT distribute any DNS information
+received from an upstream DNS server.
 
 # DNS Server Consideration
 
-A DNS server that is aware that the querying node is a node within a constrained network SHOULD
-resolve a CNAME or PTR record until the originally requested resource record type is reached.
+A DNS server that is aware that the querying node is a node within a
+constrained network SHOULD resolve a CNAME or PTR record until the resource
+record type originally requested by the node is reached.
 This reduces the number of message exchanges within a constrained network.
 
 The DNS server SHOULD send compact answers, i.e., additional or authority sections in the DNS
