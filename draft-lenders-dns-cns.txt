@@ -142,7 +142,7 @@ Table of Contents
    message both the message size and the overall number of messages is
    reduced.
 
-   TBD provide more specific example use case?
+   TBD: Provide more specific example use case?
 
 5.  Security Considerations
 
