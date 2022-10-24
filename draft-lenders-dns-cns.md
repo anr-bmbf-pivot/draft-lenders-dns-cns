@@ -1,6 +1,6 @@
 ---
 title: "Guidance on DNS Message Composition in Constrained Networks"
-abbrev: "TODO - Abbreviation"
+abbrev: "DNS in Constrained Networks"
 category: bcp
 
 docname: draft-lenders-dns-cns-latest
