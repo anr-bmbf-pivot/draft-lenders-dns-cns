@@ -1249,13 +1249,14 @@ received from an upstream DNS server.<a href="#section-3-1" class="pilcrow">¶</
 constrained network <span class="bcp14">SHOULD</span> resolve a CNAME or PTR record until the resource
 record type originally requested by the node is reached.
 This reduces the number of message exchanges within a constrained network.<a href="#section-4-1" class="pilcrow">¶</a></p>
-<p id="section-4-2">The DNS server <span class="bcp14">SHOULD</span> send compact answers, i.e., it is advised to sent the additional or authority
-sections in the DNS response only if needed in the use case or if it is anticipated that they help
-the DNS client to reduce additional queries.
-One such use case is, e.g., DNS-SD, where to a queried SRV record additional TXT and A/AAAA
-records are provided and when due to name compression in the DNS message both the
-message size and the overall number of messages is reduced.<a href="#section-4-2" class="pilcrow">¶</a></p>
-<p id="section-4-3">TBD: Provide more specific example use case?<a href="#section-4-3" class="pilcrow">¶</a></p>
+<p id="section-4-2">The DNS server <span class="bcp14">SHOULD</span> send compact answers, i.e., omit additional or
+authority sections in a DNS reply. Additional and authority sections should
+only be included if they help a DNS client to reduce queries.
+One such example is DNS-SD <span>[<a href="#RFC6763" class="cite xref">RFC6763</a>]</span>, where the answer does not only need
+to include an SRV record but also TXT and A/AAAA records to make decent use
+of the reply.<a href="#section-4-2" class="pilcrow">¶</a></p>
+<p id="section-4-3">TBD: Provide more specific example use case? Should the list be almost
+complete?<a href="#section-4-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="security-considerations">
@@ -1313,6 +1314,10 @@ of such information in <a href="#sec_node-considerations" class="auto internal x
 <dt id="RFC4944">[RFC4944]</dt>
         <dd>
 <span class="refAuthor">Montenegro, G.</span>, <span class="refAuthor">Kushalnagar, N.</span>, <span class="refAuthor">Hui, J.</span>, and <span class="refAuthor">D. Culler</span>, <span class="refTitle">"Transmission of IPv6 Packets over IEEE 802.15.4 Networks"</span>, <span class="seriesInfo">RFC 4944</span>, <span class="seriesInfo">DOI 10.17487/RFC4944</span>, <time datetime="2007-09" class="refDate">September 2007</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc4944">https://www.rfc-editor.org/rfc/rfc4944</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC6763">[RFC6763]</dt>
+        <dd>
+<span class="refAuthor">Cheshire, S.</span> and <span class="refAuthor">M. Krochmal</span>, <span class="refTitle">"DNS-Based Service Discovery"</span>, <span class="seriesInfo">RFC 6763</span>, <span class="seriesInfo">DOI 10.17487/RFC6763</span>, <time datetime="2013-02" class="refDate">February 2013</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6763">https://www.rfc-editor.org/rfc/rfc6763</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC7228">[RFC7228]</dt>
         <dd>
