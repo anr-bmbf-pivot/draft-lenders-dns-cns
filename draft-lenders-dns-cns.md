@@ -46,6 +46,7 @@ informative:
   RFC8484: doh
   RFC8724: schc
   RFC8499: dnsterm
+  RFC6763: dnssd
   I-D.ietf-core-dns-over-coap: doc
 
 --- abstract
@@ -102,14 +103,15 @@ constrained network SHOULD resolve a CNAME or PTR record until the resource
 record type originally requested by the node is reached.
 This reduces the number of message exchanges within a constrained network.
 
-The DNS server SHOULD send compact answers, i.e., it is advised to sent the additional or authority
-sections in the DNS response only if needed in the use case or if it is anticipated that they help
-the DNS client to reduce additional queries.
-One such use case is, e.g., DNS-SD, where to a queried SRV record additional TXT and A/AAAA
-records are provided and when due to name compression in the DNS message both the
-message size and the overall number of messages is reduced.
+The DNS server SHOULD send compact answers, i.e., omit additional or
+authority sections in a DNS reply. Additional and authority sections should
+only be included if they help a DNS client to reduce queries.
+One such example is DNS-SD {{-dnssd}}, where the answer does not only need
+to include an SRV record but also TXT and A/AAAA records to make decent use
+of the reply.
 
-TBD: Provide more specific example use case?
+TBD: Provide more specific example use case? Should the list be almost
+complete?
 
 
 # Security Considerations
