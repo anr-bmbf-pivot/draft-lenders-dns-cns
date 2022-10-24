@@ -102,8 +102,8 @@ constrained network SHOULD resolve a CNAME or PTR record until the resource
 record type originally requested by the node is reached.
 This reduces the number of message exchanges within a constrained network.
 
-The DNS server SHOULD send compact answers, i.e., additional or authority sections in the DNS
-response MAY only be sent if needed in the use case or if it is anticipated that they help
+The DNS server SHOULD send compact answers, i.e., it is advised to sent the additional or authority
+sections in the DNS response only if needed in the use case or if it is anticipated that they help
 the DNS client to reduce additional queries.
 One such use case is, e.g., DNS-SD, where to a queried SRV record additional TXT and A/AAAA
 records are provided and when due to name compression in the DNS message both the
